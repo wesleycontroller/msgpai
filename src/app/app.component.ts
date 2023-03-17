@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'msgpai';
+
+  texto: string = ''
+
+  constructor(private renderer: Renderer2, private el: ElementRef) { }
+
+  enviar() {
+    const iframeElement = this.el.nativeElement.querySelector('#meu-iframe');
+    const iframeContent = iframeElement.contentWindow;
+    iframeContent.postMessage(this.texto, '*');
+  }
 }
